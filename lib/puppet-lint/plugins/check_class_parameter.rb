@@ -11,7 +11,7 @@ PuppetLint.new_check(:class_parameter) do
 
         if param_token.next_code_token.nil? || param_token.next_code_token.type != :EQUALS
           notify :error, {
-            :message => "Required parameters should be specified before optional parameters",
+            :message => "Required parameter #{param_token.value} should be specified before optional parameters",
             :line    => param_token.line,
             :column  => param_token.column
           } if optional_params.any?
@@ -32,7 +32,7 @@ PuppetLint.new_check(:class_parameter) do
 
     if parameter_names != parameter_names.sort
       notify :error, {
-        :message => "Parameters not in alphabetical order",
+        :message => "Parameter list not in alphabetical order",
         :line    => params.first.line,
         :column  => params.first.column
       }
