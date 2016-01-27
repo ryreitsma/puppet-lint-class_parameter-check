@@ -6,19 +6,19 @@ PuppetLint.new_check(:class_parameter) do
       params = []
       optional_params = []
 
-      class_index[:param_tokens].each do |parameter_token|
-        next unless parameter_token.type == :VARIABLE
+      class_index[:param_tokens].each do |param_token|
+        next unless param_token.type == :VARIABLE
 
-        if parameter_token.next_code_token.nil? || parameter_token.next_code_token.type != :EQUALS
+        if param_token.next_code_token.nil? || param_token.next_code_token.type != :EQUALS
           notify :error, {
             :message => "Required parameters should be specified before optional parameters",
-            :line    => parameter_token.line,
-            :column  => parameter_token.column
+            :line    => param_token.line,
+            :column  => param_token.column
           } if optional_params.any?
 
-          params.push(parameter_token)
-        elsif parameter_token.next_code_token && parameter_token.next_code_token.type == :EQUALS
-          optional_params.push(parameter_token)
+          params.push(param_token)
+        elsif param_token.next_code_token && param_token.next_code_token.type == :EQUALS
+          optional_params.push(param_token)
         end
       end
 
