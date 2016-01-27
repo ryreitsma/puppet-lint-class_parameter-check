@@ -17,8 +17,8 @@ describe 'class_parameter' do
       context 'sorted alphabetically' do
         let(:code) { <<-EOF
           class puppet_module(
-            String alphabetical,
-            String non_alphabetical
+            String $alphabetical,
+            String $non_alphabetical
           ) { }
           EOF
         }
@@ -31,8 +31,8 @@ describe 'class_parameter' do
       context 'not sorted alphabetically' do
         let(:code) { <<-EOF
           class puppet_module(
-            String non_alphabetical,
-            String alphabetical
+            String $non_alphabetical,
+            String $alphabetical
           ) { }
           EOF
         }
@@ -47,10 +47,10 @@ describe 'class_parameter' do
       context 'sorted alphabetically per group' do
         let(:code) { <<-EOF
           class puppet_module(
-            String alphabetical,
-            String non_alphabetical,
-            String alphabetical_optional = "default",
-            String non_alphabetical_optional = "default"
+            String $alphabetical,
+            String $non_alphabetical,
+            String $alphabetical_optional = "default",
+            String $non_alphabetical_optional = "default"
           ) { }
           EOF
         }
@@ -63,10 +63,10 @@ describe 'class_parameter' do
       context 'not sorted alphabetically per group' do
         let(:code) { <<-EOF
           class puppet_module(
-            String non_alphabetical,
-            String alphabetical,
-            String non_alphabetical_optional = "default",
-            String alphabetical_optional = "default"
+            String $non_alphabetical,
+            String $alphabetical,
+            String $non_alphabetical_optional = "default",
+            String $alphabetical_optional = "default"
           ) { }
           EOF
         }
@@ -79,9 +79,9 @@ describe 'class_parameter' do
       context 'not sorted in groups' do
         let(:code) { <<-EOF
           class puppet_module(
-            String alphabetical_optional = "default",
-            String alphabetical,
-            String non_alphabetical_optional = "default"
+            String $alphabetical_optional = "default",
+            String $alphabetical,
+            String $non_alphabetical_optional = "default"
           ) { }
           EOF
         }
@@ -94,10 +94,10 @@ describe 'class_parameter' do
       context 'not sorted in groups and not alphabetically' do
         let(:code) { <<-EOF
           class puppet_module(
-            String non_alphabetical,
-            String non_alphabetical_optional = "default",
-            String alphabetical,
-            String alphabetical_optional = "default"
+            String $non_alphabetical,
+            String $non_alphabetical_optional = "default",
+            String $alphabetical,
+            String $alphabetical_optional = "default"
           ) { }
           EOF
         }
