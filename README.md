@@ -7,7 +7,7 @@ A puppet-lint plugin that checks class parameters. Class parameters should be sp
 To use this plugin, add the following like to the Gemfile in your Puppet code base and run `bundle install`.
 
 ```ruby
-gem 'puppet-lint-tutorial-check'
+gem 'puppet-lint-class_parameter-check', git: 'git@github.com:ryreitsma/puppet-lint-class_parameter-check.git'
 ```
 ## Usage
 This plugin provides a new check to `puppet-lint`.
