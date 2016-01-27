@@ -7,7 +7,7 @@ PuppetLint.new_check(:class_parameter) do
       optional_params = []
 
       class_index[:param_tokens].each do |param_token|
-        next unless param_token.type == :VARIABLE
+        next unless param_token.type == :VARIABLE && param_token.prev_code_token.type != :EQUALS
 
         if param_token.next_code_token.nil? || param_token.next_code_token.type != :EQUALS
           notify :error, {
