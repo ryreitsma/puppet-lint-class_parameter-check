@@ -3,9 +3,9 @@ require_relative '../../model/class_parameter_list'
 PuppetLint.new_check(:class_parameter) do
   def check
     class_parameter_lists.each do |class_parameter_list|
-      class_parameter_list.validate
-
-      class_parameter_list.errors.each { |error| notify :error, error }
+      unless class_parameter_list.validate
+        class_parameter_list.errors.each { |error| notify :error, error }
+      end
     end
   end
 

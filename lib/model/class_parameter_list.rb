@@ -37,6 +37,8 @@ class ClassParameterList
 
     validate_alphabetical_order(required_parameters)
     validate_alphabetical_order(optional_parameters)
+
+    errors.empty?
   end
 
 
