@@ -27,6 +27,14 @@ describe 'class_parameter' do
           expect(problems).to have(0).problems
         end
 
+        context 'in one line' do
+          let(:code) { "class puppet_module(String $alphabetical, String $non_alphabetical){ }" }
+
+          it 'has no problems' do
+            expect(problems).to have(0).problems
+          end
+        end
+
         context 'with hash parameters' do
           let(:code) { <<-EOF
             class puppet_module(

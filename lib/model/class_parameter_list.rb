@@ -55,6 +55,10 @@ class ClassParameterList
       end
 
       if (token.type == :COMMA || token == @tokens.last) && stack.empty? && parameter.tokens.any?
+        unless [:COMMA, :NEWLINE, :WHITESPACE, :INDENT].include?(token.type)
+          parameter.add(token)
+        end
+
         # always add a comma and a newline token at the end of each parameter
         parameter.add(PuppetLint::Lexer::Token.new(:COMMA, ",", 0,0))
         parameter.add(PuppetLint::Lexer::Token.new(:NEWLINE, "\n", 0,0))
