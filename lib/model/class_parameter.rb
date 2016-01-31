@@ -23,6 +23,14 @@ class ClassParameter
     tokens << token
   end
 
+  def line
+    tokens.first.line
+  end
+
+  def column
+    tokens.first.column
+  end
+
   def <=>(other)
     if (self.is_optional? && other.is_optional?) || (self.is_required? && other.is_required?)
       return self.name <=> other.name
