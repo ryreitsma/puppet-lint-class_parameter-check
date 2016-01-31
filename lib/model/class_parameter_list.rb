@@ -48,9 +48,9 @@ class ClassParameterList
     stack = []
 
     @tokens.inject([]) do |memo, token|
-      if token.type == :LBRACK || token.type == :LPAREN
+      if [:LBRACK, :LPAREN].include?(token.type)
         stack.push(true)
-      elsif token.type == :RBRACK || token.type == :RPAREN
+      elsif [:RBRACK, :RPAREN].include?(token.type)
         stack.pop
       end
 
