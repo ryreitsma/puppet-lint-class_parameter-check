@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-class_parameter-check'
-  spec.version     = '0.1.1'
+  spec.version     = '0.1.2'
   spec.licenses    = ['MIT']
   spec.summary     = "Puppet lint check for class parameters"
   spec.description = <<-EOF
