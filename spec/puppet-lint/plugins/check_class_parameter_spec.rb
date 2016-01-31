@@ -39,7 +39,6 @@ describe 'class_parameter' do
           it 'has no problems' do
             expect(problems).to have(0).problems
           end
-
         end
       end
 
@@ -75,6 +74,19 @@ describe 'class_parameter' do
           class puppet_module(
             String $alphabetical = $puppet_module::params::alphabetical
           ) inherits puppet_module::params { }
+          EOF
+        }
+
+        it 'has no problems' do
+          expect(problems).to have(0).problems
+        end
+      end
+
+      context 'optional parameter initialized with function' do
+        let(:code) { <<-EOF
+          class puppet_module(
+            Hash [String, String] $users = hiera_hash('some::hieradata::key', {})
+          ) { }
           EOF
         }
 
