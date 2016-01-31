@@ -26,6 +26,21 @@ describe 'class_parameter' do
         it 'has no problems' do
           expect(problems).to have(0).problems
         end
+
+        context 'with hash parameters' do
+          let(:code) { <<-EOF
+            class puppet_module(
+              Hash [String, String] $alphabetical,
+              String $non_alphabetical
+            ) { }
+            EOF
+          }
+
+          it 'has no problems' do
+            expect(problems).to have(0).problems
+          end
+
+        end
       end
 
       context 'not sorted alphabetically' do

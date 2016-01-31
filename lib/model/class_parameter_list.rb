@@ -45,9 +45,16 @@ class ClassParameterList
   private
   def parameters
     parameter = ClassParameter.new
+    stack = []
 
     @tokens.inject([]) do |memo, token|
-      if (token.type == :COMMA || token == @tokens.last) && parameter.tokens.any?
+      if token.type == :LBRACK
+        stack.push(true)
+      elsif token.type == :RBRACK
+        stack.pop
+      end
+
+      if (token.type == :COMMA || token == @tokens.last) && stack.empty? && parameter.tokens.any?
         # always add a comma and a newline token at the end of each parameter
         parameter.add(PuppetLint::Lexer::Token.new(:COMMA, ",", 0,0))
         parameter.add(PuppetLint::Lexer::Token.new(:NEWLINE, "\n", 0,0))
