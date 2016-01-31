@@ -134,4 +134,89 @@ describe 'class_parameter' do
       end
     end
   end
+
+  context 'with fix enabled' do
+    before do
+     PuppetLint.configuration.fix = true
+    end
+
+    after do
+     PuppetLint.configuration.fix = false
+    end
+
+    context 'class with no parameters' do
+      let(:code) { "class puppet_module() { }" }
+
+      it 'does not change the code' do
+        expect(manifest).to eq(code)
+      end
+    end
+
+    context 'class sorted alphabetically' do
+      let(:code) { <<-EOF
+          class puppet_module(
+            String $alphabetical,
+            String $non_alphabetical,
+          ) { }
+          EOF
+      }
+      it 'does not change the code' do
+        expect(manifest).to eq(code)
+      end
+    end
+
+    context 'multiple classes not sorted alphabetically' do
+      let(:code) { <<-EOF
+          class puppet_module(
+            String $non_alphabetical,
+            String $alphabetical
+          ) { }
+
+          class puppet_module2(
+            String $non_alphabetical,
+            String $alphabetical
+          ) { }
+        EOF
+      }
+
+      it 'fixes the problem' do
+        expect(manifest).to eq(<<-EOF
+          class puppet_module(
+            String $alphabetical,
+            String $non_alphabetical,
+          ) { }
+
+          class puppet_module2(
+            String $alphabetical,
+            String $non_alphabetical,
+          ) { }
+          EOF
+        )
+      end
+    end
+
+    context 'not sorted in groups and not alphabetically' do
+      let(:code) { <<-EOF
+          class puppet_module(
+            String $non_alphabetical,
+            String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional,
+            String $alphabetical,
+            String $alphabetical_optional = "default"
+          ) inherits puppet_module::params { }
+          EOF
+      }
+
+      it 'fixes the problem' do
+        expect(manifest).to eq(<<-EOF
+          class puppet_module(
+            String $alphabetical,
+            String $non_alphabetical,
+            String $alphabetical_optional = "default",
+            String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional,
+          ) inherits puppet_module::params { }
+          EOF
+        )
+      end
+    end
+  end
 end

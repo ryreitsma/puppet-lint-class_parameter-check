@@ -10,4 +10,4 @@ To use this plugin, add the following like to the Gemfile in your Puppet code ba
 gem 'puppet-lint-class_parameter-check'
 ```
 ## Usage
-This plugin provides a new check to `puppet-lint`.
+This plugin provides a new check to `puppet-lint`. It supports the `--fix` option.
