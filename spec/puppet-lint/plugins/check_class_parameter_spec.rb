@@ -28,32 +28,6 @@ describe 'class_parameter' do
         end
       end
 
-      context 'class with only optional parameters' do
-        let(:code) { <<-EOF
-          class puppet_module(
-            String $alphabetical = default
-          ) { }
-          EOF
-        }
-
-        it 'has no problems' do
-          expect(problems).to have(0).problems
-        end
-
-        context 'optional parameter from inherited class' do
-          let(:code) { <<-EOF
-            class puppet_module(
-              String $alphabetical = $puppet_module::params::alphabetical
-            ) inherits puppet_module::params { }
-            EOF
-          }
-
-          it 'has no problems' do
-            expect(problems).to have(0).problems
-          end
-        end
-      end
-
       context 'not sorted alphabetically' do
         let(:code) { <<-EOF
           class puppet_module(
@@ -65,6 +39,32 @@ describe 'class_parameter' do
 
         it 'has a problem' do
           expect(problems).to have(1).problems
+        end
+      end
+    end
+
+    context 'class with only optional parameters' do
+      let(:code) { <<-EOF
+        class puppet_module(
+          String $alphabetical = default
+        ) { }
+        EOF
+      }
+
+      it 'has no problems' do
+        expect(problems).to have(0).problems
+      end
+
+      context 'optional parameter from inherited class' do
+        let(:code) { <<-EOF
+          class puppet_module(
+            String $alphabetical = $puppet_module::params::alphabetical
+          ) inherits puppet_module::params { }
+          EOF
+        }
+
+        it 'has no problems' do
+          expect(problems).to have(0).problems
         end
       end
     end
