@@ -48,9 +48,9 @@ class ClassParameterList
     stack = []
 
     @tokens.inject([]) do |memo, token|
-      if token.type == :LBRACK || token.type == :LPAREN
+      if [:LBRACK, :LPAREN].include?(token.type)
         stack.push(true)
-      elsif token.type == :RBRACK || token.type == :RPAREN
+      elsif [:RBRACK, :RPAREN].include?(token.type)
         stack.pop
       end
 
@@ -59,12 +59,9 @@ class ClassParameterList
           parameter.add(token)
         end
 
-        # always add a comma and a newline token at the end of each parameter
-        parameter.add(PuppetLint::Lexer::Token.new(:COMMA, ",", 0,0))
-        parameter.add(PuppetLint::Lexer::Token.new(:NEWLINE, "\n", 0,0))
         memo << parameter
         parameter = ClassParameter.new
-      elsif token.type != :NEWLINE
+      else
         parameter.add(token)
       end
       memo

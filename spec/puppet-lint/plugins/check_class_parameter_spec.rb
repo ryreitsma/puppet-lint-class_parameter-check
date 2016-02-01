@@ -191,7 +191,7 @@ describe 'class_parameter' do
       let(:code) { <<-EOF
           class puppet_module(
             String $alphabetical,
-            String $non_alphabetical,
+            String $non_alphabetical
           ) { }
           EOF
       }
@@ -218,12 +218,12 @@ describe 'class_parameter' do
         expect(manifest).to eq(<<-EOF
           class puppet_module(
             String $alphabetical,
-            String $non_alphabetical,
+            String $non_alphabetical
           ) { }
 
           class puppet_module2(
             String $alphabetical,
-            String $non_alphabetical,
+            String $non_alphabetical
           ) { }
           EOF
         )
@@ -247,7 +247,7 @@ describe 'class_parameter' do
             String $alphabetical,
             String $non_alphabetical,
             String $alphabetical_optional = "default",
-            String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional,
+            String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional
           ) inherits puppet_module::params { }
           EOF
         )

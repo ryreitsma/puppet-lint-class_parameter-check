@@ -16,8 +16,15 @@ PuppetLint.new_check(:class_parameter) do
     class_parameter_lists.each do |class_parameter_list|
       resorted_tokens += tokens[token_index..class_parameter_list.start_index]
 
-      class_parameter_list.sort.each do |parameter|
+      sorted_class_parameter_list = class_parameter_list.sort
+      sorted_class_parameter_list.each do |parameter|
         resorted_tokens += parameter.tokens
+
+        unless parameter == sorted_class_parameter_list.last
+          resorted_tokens << PuppetLint::Lexer::Token.new(:COMMA, ",", 0,0)
+        end
+
+        resorted_tokens << PuppetLint::Lexer::Token.new(:NEWLINE, "\n", 0,0)
       end
 
       token_index = class_parameter_list.end_index

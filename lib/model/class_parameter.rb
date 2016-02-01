@@ -1,12 +1,10 @@
 class ClassParameter
-  attr_reader :tokens
-
   def initialize
     @tokens = []
   end
 
   def is_optional?
-    tokens.any? { |token| token.type == :EQUALS }
+    @tokens.any? { |token| token.type == :EQUALS }
   end
 
   def is_required?
@@ -14,21 +12,29 @@ class ClassParameter
   end
 
   def name
-    tokens.select do |token|
+    @tokens.select do |token|
       token.type == :VARIABLE
     end.first.value
   end
 
   def add(token)
-    tokens << token
+    # A parameter never starts with a newline token
+    unless @tokens.empty? && token.type == :NEWLINE
+      @tokens << token
+    end
+  end
+
+  def tokens
+    sanitized_tokens = strip_starting_newlines(@tokens)
+    return strip_ending_newlines(sanitized_tokens)
   end
 
   def line
-    tokens.first.line
+    @tokens.first.line
   end
 
   def column
-    tokens.first.column
+    @tokens.first.column
   end
 
   def <=>(other)
@@ -39,5 +45,19 @@ class ClassParameter
     else
       return -1
     end
+  end
+
+  private
+  def strip_starting_newlines(tokens)
+    tokens.inject([]) do |memo, token|
+      unless memo.empty? && token.type == :NEWLINE
+        memo << token
+      end
+      memo
+    end
+  end
+
+  def strip_ending_newlines(tokens)
+    strip_starting_newlines(tokens.reverse).reverse
   end
 end
