@@ -59,12 +59,9 @@ class ClassParameterList
           parameter.add(token)
         end
 
-        # always add a comma and a newline token at the end of each parameter
-        parameter.add(PuppetLint::Lexer::Token.new(:COMMA, ",", 0,0))
-        parameter.add(PuppetLint::Lexer::Token.new(:NEWLINE, "\n", 0,0))
         memo << parameter
         parameter = ClassParameter.new
-      elsif token.type != :NEWLINE
+      else
         parameter.add(token)
       end
       memo
