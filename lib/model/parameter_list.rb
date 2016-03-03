@@ -1,6 +1,6 @@
-require_relative 'class_parameter'
+require_relative 'parameter'
 
-class ClassParameterList
+class ParameterList
   attr_reader :errors, :start_index, :end_index
 
   def initialize(tokens, start_index, end_index)
@@ -44,7 +44,7 @@ class ClassParameterList
 
   private
   def parameters
-    parameter = ClassParameter.new
+    parameter = Parameter.new
     stack = []
 
     @tokens.inject([]) do |memo, token|
@@ -60,7 +60,7 @@ class ClassParameterList
         end
 
         memo << parameter
-        parameter = ClassParameter.new
+        parameter = Parameter.new
       else
         parameter.add(token)
       end

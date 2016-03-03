@@ -1,4 +1,4 @@
-class ClassParameter
+class Parameter
   def initialize
     @tokens = []
   end
