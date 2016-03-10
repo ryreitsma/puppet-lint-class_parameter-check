@@ -68,6 +68,6 @@ class PuppetClass
     end
 
     @doc_tokens.reverse!
-    return @doc_tokens
+    @doc_tokens
   end
 end
