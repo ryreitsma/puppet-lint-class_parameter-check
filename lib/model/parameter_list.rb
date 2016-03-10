@@ -12,6 +12,12 @@ class ParameterList
     parameters.sort
   end
 
+  def each(&block)
+    parameters.each do |parameter|
+      yield parameter
+    end
+  end
+
   def optional_parameters
     parameters.select(&:is_optional?)
   end

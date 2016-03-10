@@ -1,4 +1,6 @@
 class Parameter
+  attr_accessor :documentation
+
   def initialize
     @tokens = []
   end
