@@ -202,54 +202,100 @@ describe 'class_parameter' do
 
     context 'multiple classes not sorted alphabetically' do
       let(:code) { <<-EOF
-          class puppet_module(
-            String $non_alphabetical,
-            String $alphabetical
-          ) { }
+class puppet_module(
+  String $non_alphabetical,
+  String $alphabetical
+) { }
 
-          class puppet_module2(
-            String $non_alphabetical,
-            String $alphabetical
-          ) { }
-        EOF
+class puppet_module2(
+  String $non_alphabetical,
+  String $alphabetical
+) { }
+EOF
       }
 
       it 'fixes the problem' do
         expect(manifest).to eq(<<-EOF
-          class puppet_module(
-            String $alphabetical,
-            String $non_alphabetical
-          ) { }
+class puppet_module(
+  String $alphabetical,
+  String $non_alphabetical
+) { }
 
-          class puppet_module2(
-            String $alphabetical,
-            String $non_alphabetical
-          ) { }
-          EOF
+class puppet_module2(
+  String $alphabetical,
+  String $non_alphabetical
+) { }
+EOF
         )
       end
     end
 
     context 'not sorted in groups and not alphabetically' do
       let(:code) { <<-EOF
-          class puppet_module(
-            String $non_alphabetical,
-            String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional,
-            String $alphabetical,
-            String $alphabetical_optional = "default"
-          ) inherits puppet_module::params { }
-          EOF
+class puppet_module(
+  String $non_alphabetical,
+  String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional,
+  String $alphabetical,
+  String $alphabetical_optional = "default"
+) inherits puppet_module::params { }
+EOF
       }
 
       it 'fixes the problem' do
         expect(manifest).to eq(<<-EOF
-          class puppet_module(
-            String $alphabetical,
-            String $non_alphabetical,
-            String $alphabetical_optional = "default",
-            String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional
-          ) inherits puppet_module::params { }
-          EOF
+class puppet_module(
+  String $alphabetical,
+  String $non_alphabetical,
+  String $alphabetical_optional = "default",
+  String $non_alphabetical_optional = $puppet_module::params::non_alphabetical_optional
+) inherits puppet_module::params { }
+EOF
+        )
+      end
+    end
+
+    context 'with documented parameters not sorted alphabetically' do
+      let(:code) { <<-EOF
+#
+# @param non_alphabetical The non_alphabetical parameter
+# @param alphabetical The alphabetical parameter
+#
+class puppet_module(
+  String $non_alphabetical,
+  String $alphabetical
+) { }
+
+#
+# @param non_alphabetical The non_alphabetical parameter
+# @param alphabetical The alphabetical parameter
+#
+class puppet_module2(
+  String $non_alphabetical,
+  String $alphabetical
+) { }
+EOF
+      }
+
+      it 'fixes the problem' do
+        expect(manifest).to eq(<<-EOF
+#
+# @param alphabetical The alphabetical parameter
+# @param non_alphabetical The non_alphabetical parameter
+#
+class puppet_module(
+  String $alphabetical,
+  String $non_alphabetical
+) { }
+
+#
+# @param alphabetical The alphabetical parameter
+# @param non_alphabetical The non_alphabetical parameter
+#
+class puppet_module2(
+  String $alphabetical,
+  String $non_alphabetical
+) { }
+EOF
         )
       end
     end
