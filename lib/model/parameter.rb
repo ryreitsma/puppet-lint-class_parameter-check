@@ -27,8 +27,7 @@ class Parameter
   end
 
   def tokens
-    sanitized_tokens = strip_starting_newlines(@tokens)
-    return strip_ending_newlines(sanitized_tokens)
+    strip_newlines(@tokens)
   end
 
   def line
@@ -50,6 +49,11 @@ class Parameter
   end
 
   private
+  def strip_newlines(tokens)
+    stripped_tokens = strip_starting_newlines(tokens)
+    strip_ending_newlines(stripped_tokens)
+  end
+
   def strip_starting_newlines(tokens)
     tokens.inject([]) do |memo, token|
       unless memo.empty? && token.type == :NEWLINE
