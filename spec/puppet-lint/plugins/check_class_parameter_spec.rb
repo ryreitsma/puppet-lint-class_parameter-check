@@ -167,6 +167,20 @@ describe 'class_parameter' do
           expect(problems).to have(3).problems
         end
       end
+
+      context 'with a double comma syntax error' do
+        let(:code) { <<-EOF
+          class puppet_module(
+            String $alphabetical,
+            String $alphabetical_optional = "default",,
+          ) { }
+          EOF
+        }
+
+        it 'has a problem' do
+          expect(problems).to have(1).problems
+        end
+      end
     end
   end
 
