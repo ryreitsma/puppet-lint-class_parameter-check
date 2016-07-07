@@ -1,4 +1,5 @@
 class Parameter
+  class SyntaxError < StandardError; end
   attr_accessor :documentation
 
   def initialize
@@ -20,10 +21,12 @@ class Parameter
   end
 
   def add(token)
-    # A parameter never starts with a newline token
-    unless @tokens.empty? && token.type == :NEWLINE
-      @tokens << token
-    end
+    # A parameter never starts with a newline token, so skip that one
+    return if @tokens.empty? && token.type == :NEWLINE
+    # Raise a syntax error if the parameter starts with a comma.
+    raise SyntaxError, "Syntax error: Expected a parameter definition, found comma on line #{token.line}, column #{token.column}" if @tokens.empty? && token.type == :COMMA
+
+    @tokens << token
   end
 
   def tokens

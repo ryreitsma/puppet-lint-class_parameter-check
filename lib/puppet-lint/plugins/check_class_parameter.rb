@@ -13,9 +13,13 @@ PuppetLint.new_check(:class_parameter) do
         puppet_class.parameter_list.errors.each { |error| notify :error, error }
       end
     end
+  rescue Parameter::SyntaxError => error
+    notify :error, { message: error, line: nil, column: nil }
   end
 
   def fix(problem)
+    # Puppet linter wants to fix each problem. This method fixes all problems
+    # at once. Checking the @fixed makes sure code is executed only once.
     return if @fixed
 
     resorted_tokens = []
