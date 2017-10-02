@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name        = 'puppet-lint-class_parameter-check'
-  spec.version     = '0.2.1'
+  spec.version     = '0.3.0'
   spec.licenses    = ['MIT']
   spec.summary     = "Puppet lint check for class parameters"
   spec.description = <<-EOF
@@ -17,8 +17,9 @@ Gem::Specification.new do |spec|
      'spec/**/*',
   ]
   spec.homepage    = 'https://github.com/ryreitsma/puppet-lint-class_parameter-check'
-  spec.add_dependency             'puppet-lint', '~> 1.0'
+  spec.add_dependency             'puppet-lint', '~> 2.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'rspec-its', '~> 1.0'
   spec.add_development_dependency 'rspec-collection_matchers', '~> 1.0'
   spec.add_development_dependency 'rake'
