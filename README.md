@@ -3,7 +3,7 @@ A puppet-lint plugin that checks class parameters. Class parameters should be sp
 
 [ ![Codeship Status for ryreitsma/puppet-lint-class_parameter-check](https://codeship.com/projects/61472600-279e-0131-879c-36bc4bd39c71/status?branch=master)](https://codeship.com/projects/9002)
 
-[![forthebadge](http://forthebadge.com/images/badges/built-with-ruby.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/made-with-ruby.svg)](http://forthebadge.com)
 
 ## Installation
 To use this plugin, add the following like to the Gemfile in your Puppet code base and run `bundle install`.
